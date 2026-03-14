@@ -2,8 +2,6 @@ package fi.metropolia.patrikmg.project.entity;
 
 import jakarta.persistence.*;
 
-import java.time.LocalDate;
-
 @Entity
 @Table(name="orders")
 public class Orders {
@@ -17,6 +15,9 @@ public class Orders {
     private java.util.Date delivery_date;
     private int shipping_address_id;
     private String status;
+    @ManyToOne
+    @JoinColumn(insertable = false, updatable = false)
+    private Customers customer;
 
     public int getId() {return this.id;}
     public int getCustomer_id() {return this.customer_id;}
@@ -26,6 +27,8 @@ public class Orders {
     //public LocalDate getDelivery_date() {return this.delivery_date;}
     public int getShipping_address_id() {return this.shipping_address_id;}
     public String getStatus() {return this.status;}
+    public Customers getCustomers() {return this.customer;}
+
 
     public void setId(int id) {this.id=id;}
     public void setCustomer_id(int customer_id) {this.customer_id=customer_id;}
@@ -37,5 +40,6 @@ public class Orders {
         this.shipping_address_id=shipping_address_id;
     }
     public void setStatus(String status) {this.status=status;}
+    public void setCustomers(Customers customer) {this.customer=customer;}
 
 }

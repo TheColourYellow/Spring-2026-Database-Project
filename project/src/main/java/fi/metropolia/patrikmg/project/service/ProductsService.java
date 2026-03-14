@@ -1,7 +1,9 @@
 package fi.metropolia.patrikmg.project.service;
 
 import fi.metropolia.patrikmg.project.dto.ProductsDto;
+import fi.metropolia.patrikmg.project.entity.Orderitems;
 import fi.metropolia.patrikmg.project.entity.Products;
+import fi.metropolia.patrikmg.project.entity.Suppliers;
 import fi.metropolia.patrikmg.project.repository.ProductsRepository;
 import org.springframework.stereotype.Service;
 
@@ -41,8 +43,13 @@ public class ProductsService {
         return productsDto;
     }
 
-    public List<Products> listAllProducts() {
-        return productsRepository.findAll();
+    public List<ProductsDto> listAllProducts() {
+        List<Products> products = productsRepository.findAll();
+        List<ProductsDto> result = new ArrayList<>();
+        for (Products p : products) {
+            result.add(changeToDto(p));
+        }
+        return result;
     }
 
     public List<ProductsDto> listAllProductsByMaxQuantity(int quantity) {
@@ -53,5 +60,32 @@ public class ProductsService {
             result.add(changeToDto(p));
         }
         return result;
+    }
+
+    public List<Orderitems> listAllProductsInOrder(int id) {
+        List<Orderitems> products = productsRepository.findAllProductsInOrder(id);
+        /*List<ProductsDto> result = new ArrayList<>();
+        for (Products p : products) {
+            result.add(changeToDto(p));
+        }*/
+        return products;
+    }
+
+    public List<Suppliers> listAllProductSuppliers(int id) {
+        List<Suppliers> suppliers = productsRepository.findAllProductSuppliers(id);
+        return suppliers;
+    }
+
+    public List<ProductsDto> listAllProductsFromSupplier(int id) {
+        List<Products> products = productsRepository.findAllProductsFromSupplier(id);
+        List<ProductsDto> result = new ArrayList<>();
+        for (Products p : products) {
+            result.add(changeToDto(p));
+        }
+        return result;
+    }
+
+    public Products createNewProduct(Products product) {
+        return productsRepository.save(product);
     }
 }

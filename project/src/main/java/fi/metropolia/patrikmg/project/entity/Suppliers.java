@@ -2,6 +2,9 @@ package fi.metropolia.patrikmg.project.entity;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name="suppliers")
 public class Suppliers {
@@ -11,6 +14,8 @@ public class Suppliers {
     private String contact_name;
     private String phone;
     private String email;
+    @ManyToMany(mappedBy = "suppliers")
+    private List<Products> products = new ArrayList<Products>();
 
     public int getId() {return id;}
     public String getName() {return name;}
